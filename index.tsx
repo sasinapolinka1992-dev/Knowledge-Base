@@ -37,6 +37,20 @@ type TrashItem =
 
 // --- Icons ---
 const Icons = {
+  ServiceLogo: () => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '20px 24px', marginBottom: '10px' }}>
+      <div style={{ backgroundColor: '#69C', color: 'white', width: '28px', height: '28px', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px' }}>7</div>
+      <span style={{ fontSize: '22px', fontWeight: '700', color: '#333' }}>Plan7</span>
+    </div>
+  ),
+  Home: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  CRM: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>,
+  Stats: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
+  AnalyticsPie: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>,
+  Promo: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>,
+  KB: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+  AdminLetter: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 20h-4L12 4l-4 16H4"/><path d="M7.5 14h9"/></svg>,
+  ChevronDown: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>,
   Folder: ({ open }: { open?: boolean }) => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: open ? '#69C' : '#999' }}>
       <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
@@ -59,30 +73,27 @@ const Icons = {
   ),
   Image: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>,
   Video: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>,
-  Link: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>,
   Trash: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ pointerEvents: 'none' }}><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>,
   Plus: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>,
   History: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline><line x1="12" y1="7" x2="12" y2="12"></line><line x1="12" y1="12" x2="16" y2="14"></line></svg>,
   Clock: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
   Analytics: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>,
-  Palette: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="9"></circle>
-      <path d="M8 11.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-      <path d="M12 8.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-      <path d="M16 11.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-    </svg>
-  ),
+  Palette: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="9"></circle><path d="M8 11.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path><path d="M12 8.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path><path d="M16 11.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path></svg>,
   X: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>,
   Stars: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>,
 };
 
 // --- Styles ---
 const styles: { [key: string]: React.CSSProperties } = {
-  sidebar: { width: '280px', minWidth: '280px', backgroundColor: '#FFFFFF', borderRight: '1px solid #DDD', padding: '0', display: 'flex', flexDirection: 'column', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto', zIndex: 10 },
+  serviceSidebar: { width: '250px', minWidth: '250px', backgroundColor: '#F8F9FA', borderRight: '1px solid #E0E0E0', height: '100vh', display: 'flex', flexDirection: 'column', position: 'sticky', top: 0, zIndex: 20 },
+  serviceNavItem: { padding: '12px 24px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s', color: '#333', fontSize: '16px', fontWeight: 500, position: 'relative' },
+  serviceNavItemActive: { color: '#000', backgroundColor: 'transparent' },
+  serviceNavItemActiveBar: { position: 'absolute', left: 0, width: '4px', height: '100%', backgroundColor: '#69C' },
+  betaBadge: { fontSize: '10px', color: '#BBB', marginLeft: '6px', fontWeight: 'normal' },
+  kbNavSidebar: { width: '280px', minWidth: '280px', backgroundColor: '#FFFFFF', borderRight: '1px solid #DDD', display: 'flex', flexDirection: 'column', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto', zIndex: 10 },
   adminBar: { padding: '15px', backgroundColor: '#F5F5F5', borderBottom: '1px solid #DDD', marginBottom: '10px' },
-  navItem: { padding: '10px 20px', cursor: 'pointer', color: '#333', fontSize: '15px', fontWeight: 500, transition: 'background 0.2s', display: 'flex', alignItems: 'center', gap: '12px', userSelect: 'none' },
-  navItemActive: { backgroundColor: '#F0F7FF', color: '#69C' },
+  kbNavItem: { padding: '10px 20px', cursor: 'pointer', color: '#333', fontSize: '15px', fontWeight: 500, transition: 'background 0.2s', display: 'flex', alignItems: 'center', gap: '12px', userSelect: 'none' },
+  kbNavItemActive: { backgroundColor: '#F0F7FF', color: '#69C' },
   subItem: { padding: '8px 20px 8px 52px', cursor: 'pointer', color: '#666', fontSize: '14px', fontWeight: 400, transition: 'all 0.2s', borderLeft: '3px solid transparent', display: 'flex', alignItems: 'center', gap: '8px' },
   subItemActive: { backgroundColor: '#F9F9F9', color: '#69C', borderLeftColor: '#69C' },
   mainContent: { flex: 1, padding: '40px', maxWidth: '100%', overflowX: 'hidden', margin: '0 auto', width: '100%', position: 'relative' },
@@ -95,8 +106,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   visualEditor: { width: '100%', minHeight: '400px', padding: '20px', border: '1px solid #DDD', borderRadius: '0 0 6px 6px', fontSize: '15px', fontFamily: 'Roboto, sans-serif', outline: 'none', lineHeight: 1.6, backgroundColor: '#FFF', overflowY: 'auto' },
   tag: { fontSize: '12px', backgroundColor: '#EAEAEA', color: '#666', padding: '2px 8px', borderRadius: '12px', marginRight: '6px' },
   input: { width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #DDD', marginBottom: '10px', fontSize: '14px', outline: 'none' },
-  sidebarSearchContainer: { position: 'relative', margin: '10px 15px', marginBottom: '15px' },
-  sidebarSearchInput: { width: '100%', padding: '10px 12px 10px 35px', borderRadius: '6px', border: '1px solid #DDD', fontSize: '14px', outline: 'none', backgroundColor: '#FAFAFA' },
+  kbSearchContainer: { position: 'relative', margin: '10px 15px', marginBottom: '15px' },
+  kbSearchInput: { width: '100%', padding: '10px 12px 10px 35px', borderRadius: '6px', border: '1px solid #DDD', fontSize: '14px', outline: 'none', backgroundColor: '#FAFAFA' },
   badge: { fontSize: '10px', padding: '2px 6px', borderRadius: '4px', marginLeft: 'auto', fontWeight: 'bold' },
   timelineLine: { position: 'absolute', left: '50%', top: '100px', bottom: 0, width: '2px', backgroundColor: '#DDD', transform: 'translateX(-50%)' },
   feedback: { marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #EEE', display: 'flex', alignItems: 'center', gap: '15px' },
@@ -137,6 +148,7 @@ const App: React.FC = () => {
   const [editTags, setEditTags] = useState<string[]>([]);
   const [editDate, setEditDate] = useState(new Date().toISOString().slice(0, 16));
   const [isSaving, setIsSaving] = useState(false);
+  const [editorKey, setEditorKey] = useState(Date.now()); // Used to force-refresh editor
 
   // Update editor states
   const [updTitle, setUpdTitle] = useState('');
@@ -196,7 +208,6 @@ const App: React.FC = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const base64 = e.target?.result as string;
-      // Added loading="lazy" and display block for better rendering
       const img = `<img src="${base64}" loading="lazy" style="max-width: 100%; height: auto; border-radius: 6px; margin: 20px 0; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />`;
       exec('insertHTML', img);
     };
@@ -212,18 +223,22 @@ const App: React.FC = () => {
 
   // --- Actions ---
   const saveArticle = () => {
+    if (!editTitle.trim()) { alert('Пожалуйста, введите заголовок статьи.'); return; }
+    if (!editCategory) { alert('Пожалуйста, выберите тему статьи.'); return; }
+
     setIsSaving(true);
-    const content = editorRef.current?.innerHTML || '';
+    // Explicitly grab HTML from the editorRef
+    const currentHTML = editorRef.current?.innerHTML || '';
     const oldArticle = articles.find(a => a.id === editId);
     
     const currentVersions = oldArticle ? [...oldArticle.versions, oldArticle.content] : [];
 
     const newArt: KBArticle = {
       id: editId || Date.now().toString(),
-      title: editTitle,
-      subtitle: editSubtitle,
+      title: editTitle.trim(),
+      subtitle: editSubtitle.trim(),
       category: editCategory,
-      content,
+      content: currentHTML,
       tags: editTags,
       publishedAt: new Date(editDate).toISOString(),
       helpfulCount: oldArticle?.helpfulCount || 0,
@@ -236,19 +251,21 @@ const App: React.FC = () => {
       return [...prev, newArt];
     });
 
-    setTimeout(() => { 
-      setIsSaving(false); 
-      setSelectedArticle(newArt);
-      setView('article');
-    }, 300);
+    // Sync selected article and view
+    setSelectedArticle(newArt);
+    setIsSaving(false);
+    setView('article');
   };
 
   const saveUpdate = () => {
-    const desc = updEditorRef.current?.innerHTML || '';
+    if (!updTitle.trim()) { alert('Пожалуйста, введите заголовок обновления.'); return; }
+    const currentDesc = updEditorRef.current?.innerHTML || '';
+    if (!currentDesc.trim()) { alert('Пожалуйста, заполните описание обновления.'); return; }
+
     const newUpd: UpdateEntry = {
       id: Date.now().toString(),
-      title: updTitle,
-      description: desc,
+      title: updTitle.trim(),
+      description: currentDesc,
       date: new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date()),
       emoji: updEmoji,
       type: updType,
@@ -257,6 +274,10 @@ const App: React.FC = () => {
     };
     setUpdates(prev => [newUpd, ...prev]);
     setView('updates');
+    
+    // Reset state for next update
+    setUpdTitle('');
+    if (updEditorRef.current) updEditorRef.current.innerHTML = '';
   };
 
   const deleteArticle = (id: string) => {
@@ -317,20 +338,17 @@ const App: React.FC = () => {
     if (!input) return;
     
     if (modal === 'addTopic') {
-      setCategories(prev => {
-        if (!prev.includes(input)) return [...prev, input];
-        return prev;
-      });
+      if (!categories.includes(input)) {
+        setCategories(prev => [...prev, input]);
+      }
       setEditCategory(input);
     } else if (modal === 'addTag') {
-      setTagsList(prev => {
-        if (!prev.includes(input)) return [...prev, input];
-        return prev;
-      });
-      setEditTags(prev => {
-        if (!prev.includes(input)) return [...prev, input];
-        return prev;
-      });
+      if (!tagsList.includes(input)) {
+        setTagsList(prev => [...prev, input]);
+      }
+      if (!editTags.includes(input)) {
+        setEditTags(prev => [...prev, input]);
+      }
     }
     setModal('none');
     setModalInput('');
@@ -378,7 +396,7 @@ const App: React.FC = () => {
 
   return (
     <React.Fragment>
-      {/* Modal */}
+      {/* Modal for adding Topic or Tag */}
       {modal !== 'none' && (
         <div style={styles.modalOverlay} onClick={() => setModal('none')}>
           <div style={styles.modalBody} onClick={e => e.stopPropagation()}>
@@ -392,7 +410,7 @@ const App: React.FC = () => {
               placeholder={modal === 'addTopic' ? 'Название темы' : 'Название тега'} 
               value={modalInput} 
               onChange={e => setModalInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleModalSave()}
+              onKeyDown={e => { if (e.key === 'Enter') handleModalSave(); }}
             />
             <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
               <button style={{ ...styles.button, flex: 1 }} onClick={handleModalSave}>Сохранить</button>
@@ -402,37 +420,71 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <div style={styles.sidebar}>
+      {/* Global Service Sidebar */}
+      <div style={styles.serviceSidebar}>
+        <Icons.ServiceLogo />
+        <div style={styles.serviceNavItem}><Icons.Home /><span style={{ flex: 1 }}>Мои Каталоги</span></div>
+        <div style={styles.serviceNavItem}><Icons.CRM /><span style={{ flex: 1 }}>Интеграция с CRM</span></div>
+        <div style={styles.serviceNavItem}><Icons.Stats /><span style={{ flex: 1 }}>Статистика</span></div>
+        <div style={styles.serviceNavItem}>
+          <Icons.AnalyticsPie /><span style={{ flex: 1 }}>Аналитика</span>
+          <span style={styles.betaBadge}>beta</span>
+        </div>
+        <div style={styles.serviceNavItem}><Icons.Promo /><span style={{ flex: 1 }}>Акции</span></div>
+        <div style={{ ...styles.serviceNavItem, ...styles.serviceNavItemActive }}>
+          <div style={styles.serviceNavItemActiveBar} />
+          <div style={{ color: '#69C', display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+            <Icons.KB />
+            <span style={{ flex: 1, color: '#000' }}>База знаний</span>
+            <Icons.ChevronDown />
+          </div>
+        </div>
+        <div style={{ ...styles.serviceNavItem, marginTop: 'auto', marginBottom: '20px' }}><Icons.AdminLetter /><span style={{ flex: 1 }}>Админ P7</span></div>
+      </div>
+
+      {/* KB Navigation Sidebar */}
+      <div style={styles.kbNavSidebar}>
         <div style={styles.adminBar}>
-          <div style={{ ...styles.navItem, backgroundColor: isAdmin ? '#69C' : '#FFF', color: isAdmin ? '#FFF' : '#333', borderRadius: '6px', border: '1px solid #DDD', marginBottom: '10px' }} onClick={() => setIsAdmin(!isAdmin)}>
+          <div style={{ ...styles.kbNavItem, backgroundColor: isAdmin ? '#69C' : '#FFF', color: isAdmin ? '#FFF' : '#333', borderRadius: '6px', border: '1px solid #DDD', marginBottom: '10px' }} onClick={() => setIsAdmin(!isAdmin)}>
             🛡️ {isAdmin ? 'Админ: ВКЛ' : 'Включить Админ'}
           </div>
           {isAdmin && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <button style={{ ...styles.button, width: '100%', marginBottom: '5px' }} onClick={() => { setEditId(null); setEditTitle(''); setEditSubtitle(''); setEditCategory(categories[0] || ''); setEditTags([]); setView('editor'); }}>
+              <button style={{ ...styles.button, width: '100%', marginBottom: '5px' }} onClick={() => { 
+                setEditId(null); 
+                setEditTitle(''); 
+                setEditSubtitle(''); 
+                setEditCategory(categories[0] || ''); 
+                setEditTags([]); 
+                setEditorKey(Date.now()); // Ensure clean editor
+                setView('editor'); 
+              }}>
                 <Icons.Plus /> Статья
               </button>
-              <button style={{ ...styles.buttonSecondary, width: '100%', marginBottom: '5px' }} onClick={() => { setUpdTitle(''); setView('updateEditor'); }}>
+              <button style={{ ...styles.buttonSecondary, width: '100%', marginBottom: '5px' }} onClick={() => { 
+                setUpdTitle(''); 
+                setView('updateEditor'); 
+              }}>
                 <Icons.Plus /> Обновление
               </button>
               <div style={{ borderBottom: '1px solid #DDD', margin: '5px 0' }} />
-              <div style={{ ...styles.navItem, padding: '5px 10px', fontSize: '13px' }} onClick={() => setView('analytics')}><Icons.Analytics /> Аналитика</div>
-              <div style={{ ...styles.navItem, padding: '5px 10px', fontSize: '13px' }} onClick={() => setView('scheduled')}><Icons.Clock /> Отложенные ({scheduledArticles.length})</div>
-              <div style={{ ...styles.navItem, padding: '5px 10px', fontSize: '13px' }} onClick={() => setView('trash')}><Icons.Trash /> Корзина ({trash.length})</div>
+              <div style={{ ...styles.kbNavItem, padding: '5px 10px', fontSize: '13px' }} onClick={() => setView('analytics')}><Icons.Analytics /> Аналитика</div>
+              <div style={{ ...styles.kbNavItem, padding: '5px 10px', fontSize: '13px' }} onClick={() => setView('scheduled')}><Icons.Clock /> Отложенные ({scheduledArticles.length})</div>
+              <div style={{ ...styles.kbNavItem, padding: '5px 10px', fontSize: '13px' }} onClick={() => setView('trash')}><Icons.Trash /> Корзина ({trash.length})</div>
             </div>
           )}
         </div>
 
-        <div style={{ ...styles.navItem, ...(view === 'updates' ? styles.navItemActive : {}) }} onClick={() => setView('updates')}>✨ Обновления</div>
+        <div style={{ ...styles.kbNavItem, ...(view === 'updates' ? styles.kbNavItemActive : {}) }} onClick={() => { setSelectedArticle(null); setView('updates'); }}>✨ Обновления</div>
 
-        <div style={styles.sidebarSearchContainer}>
+        <div style={styles.kbSearchContainer}>
           <div style={{ position: 'absolute', left: '12px', top: '12px' }}><Icons.Search /></div>
-          <input style={styles.sidebarSearchInput} placeholder="Поиск" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+          <input style={styles.kbSearchInput} placeholder="Поиск" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
 
         {sidebarThemes.map(theme => (
           <div key={theme}>
-            <div style={styles.navItem} onClick={() => {
+            <div style={styles.kbNavItem} onClick={() => {
               const next = new Set(openThemes);
               openThemes.has(theme) ? next.delete(theme) : next.add(theme);
               setOpenThemes(next);
@@ -454,6 +506,7 @@ const App: React.FC = () => {
         ))}
       </div>
 
+      {/* Main Content Area */}
       <div style={styles.mainContent}>
         {view === 'article' && selectedArticle && (
           <div key={selectedArticle.id}>
@@ -461,7 +514,16 @@ const App: React.FC = () => {
               <span style={{ color: '#69C', cursor: 'pointer', fontWeight: 500 }} onClick={() => setView('updates')}>← Назад</span>
               <div style={{ display: 'flex', gap: '10px' }}>
                 {isAdmin && <button style={styles.buttonSecondary} onClick={() => setView('versionHistory')}><Icons.History /> Версии ({selectedArticle.versions.length})</button>}
-                {isAdmin && <button style={styles.buttonSecondary} onClick={() => { setEditId(selectedArticle.id); setEditTitle(selectedArticle.title); setEditSubtitle(selectedArticle.subtitle || ''); setEditCategory(selectedArticle.category); setEditTags(selectedArticle.tags); setEditDate(new Date(selectedArticle.publishedAt).toISOString().slice(0, 16)); setView('editor'); }}>Редактировать</button>}
+                {isAdmin && <button style={styles.buttonSecondary} onClick={() => { 
+                  setEditId(selectedArticle.id); 
+                  setEditTitle(selectedArticle.title); 
+                  setEditSubtitle(selectedArticle.subtitle || ''); 
+                  setEditCategory(selectedArticle.category); 
+                  setEditTags(selectedArticle.tags); 
+                  setEditDate(new Date(selectedArticle.publishedAt).toISOString().slice(0, 16)); 
+                  setEditorKey(Date.now()); // Key changes to remount and load content
+                  setView('editor'); 
+                }}>Редактировать</button>}
                 {isAdmin && <button style={styles.buttonDanger} onClick={() => deleteArticle(selectedArticle.id)}><Icons.Trash /> Удалить</button>}
               </div>
             </div>
@@ -546,7 +608,7 @@ const App: React.FC = () => {
                     <option value="">Выберите тему...</option>
                     {categories.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
-                  <button style={styles.buttonSecondary} onClick={() => setModal('addTopic')}>+</button>
+                  <button style={styles.buttonSecondary} onClick={() => setModal('addTopic')} title="Создать новую тему">+</button>
                 </div>
                 <input style={{...styles.input, marginBottom: 0}} placeholder="Главный заголовок" value={editTitle} onChange={e => setEditTitle(e.target.value)} />
               </div>
@@ -560,7 +622,7 @@ const App: React.FC = () => {
                     ))}
                     {editTags.length === 0 && <span style={{ color: '#999', fontSize: '13px' }}>Теги...</span>}
                   </div>
-                  <button style={styles.buttonSecondary} onClick={() => setModal('addTag')}>+</button>
+                  <button style={styles.buttonSecondary} onClick={() => setModal('addTag')} title="Создать новый тег">+</button>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '8px', marginBottom: '15px', flexWrap: 'wrap' }}>
@@ -570,7 +632,13 @@ const App: React.FC = () => {
               </div>
               <Toolbar />
               <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={e => e.target.files && handleImageUpload(e.target.files[0])} />
-              <div ref={editorRef} contentEditable style={styles.visualEditor} dangerouslySetInnerHTML={{ __html: oldArticleContent || '' }} />
+              <div 
+                key={`${editId || 'new'}-${editorKey}`} 
+                ref={editorRef} 
+                contentEditable 
+                style={styles.visualEditor} 
+                dangerouslySetInnerHTML={{ __html: editId ? (articles.find(a => a.id === editId)?.content || '') : '' }} 
+              />
             </div>
           </div>
         )}
@@ -579,7 +647,10 @@ const App: React.FC = () => {
           <div>
             <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h1 style={styles.h1}>Новое обновление</h1>
-              <button style={styles.button} onClick={saveUpdate}>Опубликовать</button>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button style={styles.buttonSecondary} onClick={() => setView('updates')}>Отмена</button>
+                <button style={styles.button} onClick={saveUpdate}>Опубликовать</button>
+              </div>
             </div>
             <div style={styles.container}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '15px', marginBottom: '15px' }}>
@@ -597,7 +668,7 @@ const App: React.FC = () => {
                 </div>
               </div>
               <Toolbar />
-              <div ref={updEditorRef} contentEditable style={styles.visualEditor} />
+              <div key="new-update-editor" ref={updEditorRef} contentEditable style={styles.visualEditor} />
             </div>
           </div>
         )}
@@ -700,39 +771,23 @@ const App: React.FC = () => {
       </div>
 
       <style>{`
-        .article-body { 
-          line-height: 1.7; 
-          font-size: 15px; 
-          color: #333; 
-          overflow-wrap: break-word; 
-          word-wrap: break-word; 
-          hyphens: auto;
-        }
+        .article-body { line-height: 1.7; font-size: 15px; color: #333; overflow-wrap: break-word; word-wrap: break-word; hyphens: auto; }
         .article-body h2 { border-bottom: 1px solid #EEE; padding-bottom: 8px; margin-top: 30px; margin-bottom: 15px; color: #333; font-size: 19px; }
         .article-body p { margin-bottom: 18px; }
         .article-body ul, .article-body ol { padding-left: 25px; margin-bottom: 18px; }
         .article-body li { margin-bottom: 8px; }
-        .article-body img { 
-          max-width: 100%; 
-          height: auto; 
-          border-radius: 8px; 
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-          display: block; 
-          margin: 25px auto; 
-        }
+        .article-body img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: block; margin: 25px auto; }
         .article-body strong { color: #000; }
         select { background: #FFF; cursor: pointer; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #bbb; }
+        div[style*="serviceNavItem"]:hover { background-color: #EEE !important; }
       `}</style>
     </React.Fragment>
   );
 };
-
-// Helper for initial content
-const oldArticleContent = "";
 
 const root = createRoot(document.getElementById('root')!);
 root.render(<App />);
