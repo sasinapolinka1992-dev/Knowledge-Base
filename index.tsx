@@ -79,20 +79,20 @@ const Icons = {
 
 // --- Styles ---
 const styles: { [key: string]: React.CSSProperties } = {
-  sidebar: { width: '280px', backgroundColor: '#FFFFFF', borderRight: '1px solid #DDD', padding: '0', display: 'flex', flexDirection: 'column', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto', zIndex: 10 },
+  sidebar: { width: '280px', minWidth: '280px', backgroundColor: '#FFFFFF', borderRight: '1px solid #DDD', padding: '0', display: 'flex', flexDirection: 'column', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto', zIndex: 10 },
   adminBar: { padding: '15px', backgroundColor: '#F5F5F5', borderBottom: '1px solid #DDD', marginBottom: '10px' },
   navItem: { padding: '10px 20px', cursor: 'pointer', color: '#333', fontSize: '15px', fontWeight: 500, transition: 'background 0.2s', display: 'flex', alignItems: 'center', gap: '12px', userSelect: 'none' },
   navItemActive: { backgroundColor: '#F0F7FF', color: '#69C' },
   subItem: { padding: '8px 20px 8px 52px', cursor: 'pointer', color: '#666', fontSize: '14px', fontWeight: 400, transition: 'all 0.2s', borderLeft: '3px solid transparent', display: 'flex', alignItems: 'center', gap: '8px' },
   subItemActive: { backgroundColor: '#F9F9F9', color: '#69C', borderLeftColor: '#69C' },
-  mainContent: { flex: 1, padding: '40px', maxWidth: '1200px', margin: '0 auto', width: '100%', position: 'relative' },
-  container: { backgroundColor: '#FFFFFF', padding: '30px', borderRadius: '6px', border: '1px solid #DDD', marginBottom: '20px', position: 'relative' },
+  mainContent: { flex: 1, padding: '40px', maxWidth: '100%', overflowX: 'hidden', margin: '0 auto', width: '100%', position: 'relative' },
+  container: { backgroundColor: '#FFFFFF', padding: '30px', borderRadius: '6px', border: '1px solid #DDD', marginBottom: '20px', position: 'relative', overflowWrap: 'break-word', wordWrap: 'break-word' },
   h1: { fontSize: '24px', fontWeight: 'bold', color: '#333', marginBottom: '15px', marginTop: 0 },
   button: { backgroundColor: '#69C', color: '#FFF', border: 'none', padding: '10px 20px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '6px' },
   buttonSecondary: { backgroundColor: '#EAEAEA', color: '#333', border: 'none', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '6px' },
   buttonDanger: { backgroundColor: '#FEE2E2', color: '#EF4444', border: 'none', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '6px' },
   wordToolbar: { display: 'flex', gap: '6px', backgroundColor: '#F8F9FA', border: '1px solid #DDD', borderBottom: 'none', borderRadius: '6px 6px 0 0', padding: '8px', flexWrap: 'wrap', alignItems: 'center' },
-  visualEditor: { width: '100%', minHeight: '400px', padding: '20px', border: '1px solid #DDD', borderRadius: '0 0 6px 6px', fontSize: '15px', fontFamily: 'Roboto, sans-serif', outline: 'none', lineHeight: 1.6, backgroundColor: '#FFF' },
+  visualEditor: { width: '100%', minHeight: '400px', padding: '20px', border: '1px solid #DDD', borderRadius: '0 0 6px 6px', fontSize: '15px', fontFamily: 'Roboto, sans-serif', outline: 'none', lineHeight: 1.6, backgroundColor: '#FFF', overflowY: 'auto' },
   tag: { fontSize: '12px', backgroundColor: '#EAEAEA', color: '#666', padding: '2px 8px', borderRadius: '12px', marginRight: '6px' },
   input: { width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #DDD', marginBottom: '10px', fontSize: '14px', outline: 'none' },
   sidebarSearchContainer: { position: 'relative', margin: '10px 15px', marginBottom: '15px' },
@@ -159,6 +159,11 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Scroll to top on view or article change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [view, selectedArticle?.id]);
+
   // Helpers
   const isPublished = (dateStr: string) => new Date(dateStr) <= new Date();
 
@@ -191,7 +196,8 @@ const App: React.FC = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const base64 = e.target?.result as string;
-      const img = `<img src="${base64}" style="max-width: 100%; height: auto; border-radius: 6px; margin: 20px 0; display: block;" />`;
+      // Added loading="lazy" and display block for better rendering
+      const img = `<img src="${base64}" loading="lazy" style="max-width: 100%; height: auto; border-radius: 6px; margin: 20px 0; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />`;
       exec('insertHTML', img);
     };
     reader.readAsDataURL(file);
@@ -232,8 +238,8 @@ const App: React.FC = () => {
 
     setTimeout(() => { 
       setIsSaving(false); 
-      setView('article');
       setSelectedArticle(newArt);
+      setView('article');
     }, 300);
   };
 
@@ -403,7 +409,7 @@ const App: React.FC = () => {
           </div>
           {isAdmin && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <button style={{ ...styles.button, width: '100%', marginBottom: '5px' }} onClick={() => { setEditId(null); setEditTitle(''); setEditSubtitle(''); setEditCategory(categories[0]); setEditTags([]); setView('editor'); }}>
+              <button style={{ ...styles.button, width: '100%', marginBottom: '5px' }} onClick={() => { setEditId(null); setEditTitle(''); setEditSubtitle(''); setEditCategory(categories[0] || ''); setEditTags([]); setView('editor'); }}>
                 <Icons.Plus /> Статья
               </button>
               <button style={{ ...styles.buttonSecondary, width: '100%', marginBottom: '5px' }} onClick={() => { setUpdTitle(''); setView('updateEditor'); }}>
@@ -450,9 +456,9 @@ const App: React.FC = () => {
 
       <div style={styles.mainContent}>
         {view === 'article' && selectedArticle && (
-          <div>
-            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: '#69C', cursor: 'pointer' }} onClick={() => setView('updates')}>← Назад</span>
+          <div key={selectedArticle.id}>
+            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ color: '#69C', cursor: 'pointer', fontWeight: 500 }} onClick={() => setView('updates')}>← Назад</span>
               <div style={{ display: 'flex', gap: '10px' }}>
                 {isAdmin && <button style={styles.buttonSecondary} onClick={() => setView('versionHistory')}><Icons.History /> Версии ({selectedArticle.versions.length})</button>}
                 {isAdmin && <button style={styles.buttonSecondary} onClick={() => { setEditId(selectedArticle.id); setEditTitle(selectedArticle.title); setEditSubtitle(selectedArticle.subtitle || ''); setEditCategory(selectedArticle.category); setEditTags(selectedArticle.tags); setEditDate(new Date(selectedArticle.publishedAt).toISOString().slice(0, 16)); setView('editor'); }}>Редактировать</button>}
@@ -467,8 +473,8 @@ const App: React.FC = () => {
                 </div>
               )}
               <h1 style={styles.h1}>{selectedArticle.title}</h1>
-              {selectedArticle.subtitle && <h2 style={{ fontSize: '18px', color: '#666', marginBottom: '15px', marginTop: '-10px' }}>{selectedArticle.subtitle}</h2>}
-              <div style={{ marginBottom: '20px' }}>
+              {selectedArticle.subtitle && <h2 style={{ fontSize: '18px', color: '#666', marginBottom: '15px', marginTop: '-10px', lineHeight: 1.4 }}>{selectedArticle.subtitle}</h2>}
+              <div style={{ marginBottom: '25px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {selectedArticle.tags.map(tag => <span key={tag} style={styles.tag}>#{tag}</span>)}
               </div>
               <div className="article-body" dangerouslySetInnerHTML={{ __html: selectedArticle.content }} />
@@ -526,10 +532,10 @@ const App: React.FC = () => {
 
         {view === 'editor' && (
           <div className="editor-view">
-            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h1 style={styles.h1}>{editId ? 'Редактировать статью' : 'Новая статья'}</h1>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <button style={styles.buttonSecondary} onClick={() => setView('updates')}>Отмена</button>
+                <button style={styles.buttonSecondary} onClick={() => setView(selectedArticle ? 'article' : 'updates')}>Отмена</button>
                 <button style={styles.button} onClick={saveArticle}>{isSaving ? '...' : 'Сохранить'}</button>
               </div>
             </div>
@@ -537,6 +543,7 @@ const App: React.FC = () => {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
                 <div style={{ display: 'flex', gap: '5px' }}>
                   <select style={{ ...styles.input, flex: 1, marginBottom: 0 }} value={editCategory} onChange={e => setEditCategory(e.target.value)}>
+                    <option value="">Выберите тему...</option>
                     {categories.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                   <button style={styles.buttonSecondary} onClick={() => setModal('addTopic')}>+</button>
@@ -547,9 +554,9 @@ const App: React.FC = () => {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
                 <input type="datetime-local" style={{...styles.input, marginBottom: 0}} value={editDate} onChange={e => setEditDate(e.target.value)} />
                 <div style={{ display: 'flex', gap: '5px' }}>
-                  <div style={{ ...styles.input, minHeight: '40px', flex: 1, display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: 0 }}>
+                  <div style={{ ...styles.input, minHeight: '40px', flex: 1, display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: 0, alignItems: 'center' }}>
                     {editTags.map(tag => (
-                      <span key={tag} style={{ ...styles.tag, backgroundColor: '#69C', color: '#FFF', marginRight: 0 }}>{tag} <span style={{ cursor: 'pointer' }} onClick={() => handleTagToggle(tag)}>×</span></span>
+                      <span key={tag} style={{ ...styles.tag, backgroundColor: '#69C', color: '#FFF', marginRight: 0, display: 'flex', alignItems: 'center', gap: '4px' }}>{tag} <span style={{ cursor: 'pointer', fontSize: '14px' }} onClick={() => handleTagToggle(tag)}>×</span></span>
                     ))}
                     {editTags.length === 0 && <span style={{ color: '#999', fontSize: '13px' }}>Теги...</span>}
                   </div>
@@ -558,19 +565,19 @@ const App: React.FC = () => {
               </div>
               <div style={{ display: 'flex', gap: '8px', marginBottom: '15px', flexWrap: 'wrap' }}>
                 {tagsList.map(tag => (
-                  <button key={tag} onClick={() => handleTagToggle(tag)} style={{ ...styles.tag, cursor: 'pointer', border: '1px solid #DDD', backgroundColor: editTags.includes(tag) ? '#69C' : '#FFF', color: editTags.includes(tag) ? '#FFF' : '#666' }}>{tag}</button>
+                  <button key={tag} onClick={() => handleTagToggle(tag)} style={{ ...styles.tag, cursor: 'pointer', border: '1px solid #DDD', backgroundColor: editTags.includes(tag) ? '#69C' : '#FFF', color: editTags.includes(tag) ? '#FFF' : '#666', transition: 'all 0.1s' }}>{tag}</button>
                 ))}
               </div>
               <Toolbar />
               <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={e => e.target.files && handleImageUpload(e.target.files[0])} />
-              <div ref={editorRef} contentEditable style={styles.visualEditor} onInput={() => {}} dangerouslySetInnerHTML={{ __html: articles.find(a => a.id === editId)?.content || '' }} />
+              <div ref={editorRef} contentEditable style={styles.visualEditor} dangerouslySetInnerHTML={{ __html: oldArticleContent || '' }} />
             </div>
           </div>
         )}
 
         {view === 'updateEditor' && (
           <div>
-            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h1 style={styles.h1}>Новое обновление</h1>
               <button style={styles.button} onClick={saveUpdate}>Опубликовать</button>
             </div>
@@ -584,8 +591,8 @@ const App: React.FC = () => {
                 </select>
                 <div>
                   <input style={{...styles.input, marginBottom: '5px'}} placeholder="Эмодзи" value={updEmoji} onChange={e => setUpdEmoji(e.target.value)} />
-                  <div style={{ display: 'flex', gap: '4px' }}>
-                    {EMOJIS.slice(0, 8).map(e => <span key={e} style={{ cursor: 'pointer' }} onClick={() => setUpdEmoji(e)}>{e}</span>)}
+                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                    {EMOJIS.slice(0, 12).map(e => <span key={e} style={{ cursor: 'pointer', fontSize: '18px' }} onClick={() => setUpdEmoji(e)}>{e}</span>)}
                   </div>
                 </div>
               </div>
@@ -600,14 +607,14 @@ const App: React.FC = () => {
             <h1 style={styles.h1}>История версий: {selectedArticle.title}</h1>
             <button style={{...styles.buttonSecondary, marginBottom: '20px'}} onClick={() => setView('article')}>← Назад к статье</button>
             {selectedArticle.versions.length === 0 ? <p>История пуста.</p> : 
-              selectedArticle.versions.map((content, idx) => (
+              selectedArticle.versions.slice().reverse().map((content, idx) => (
                 <div key={idx} style={styles.container}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #EEE', marginBottom: '15px', paddingBottom: '10px' }}>
-                    <div style={{ fontWeight: 'bold' }}>Версия {idx + 1}</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #EEE', marginBottom: '15px', paddingBottom: '10px', alignItems: 'center' }}>
+                    <div style={{ fontWeight: 'bold' }}>Версия {selectedArticle.versions.length - idx}</div>
                     <span style={{ color: '#999', fontSize: '12px' }}>Архивная копия</span>
                   </div>
                   <div className="article-body" dangerouslySetInnerHTML={{ __html: content }} />
-                  <button style={{...styles.button, marginTop: '15px'}} onClick={() => {
+                  <button style={{...styles.button, marginTop: '20px'}} onClick={() => {
                     const restored = { ...selectedArticle, content, versions: [...selectedArticle.versions, selectedArticle.content] };
                     setArticles(prev => prev.map(a => a.id === selectedArticle.id ? restored : a));
                     setSelectedArticle(restored);
@@ -623,12 +630,12 @@ const App: React.FC = () => {
           <div>
             <h1 style={styles.h1}>Отложенные статьи</h1>
             {scheduledArticles.length === 0 ? <p>Нет запланированных статей.</p> : scheduledArticles.map(a => (
-              <div key={a.id} style={{ ...styles.container, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
+              <div key={a.id} style={{ ...styles.container, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
+                <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 5px 0' }}>{a.title}</h3>
-                  <span style={{ color: '#69C', fontSize: '13px' }}>📅 Публикация: {new Date(a.publishedAt).toLocaleString()}</span>
+                  <span style={{ color: '#69C', fontSize: '13px', fontWeight: 500 }}>📅 Публикация: {new Date(a.publishedAt).toLocaleString()}</span>
                 </div>
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
                   <button style={styles.button} onClick={() => publishNow(a)}>Опубликовать сейчас</button>
                   <button style={styles.buttonSecondary} onClick={() => { setSelectedArticle(a); setView('article'); }}>Просмотр</button>
                   <button style={styles.buttonDanger} onClick={() => deleteArticle(a.id)}><Icons.Trash /></button>
@@ -640,14 +647,30 @@ const App: React.FC = () => {
 
         {view === 'analytics' && (
           <div>
-            <h1 style={styles.h1}>Аналитика</h1>
+            <h1 style={styles.h1}>Аналитика полезности</h1>
             <div style={styles.container}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead><tr style={{ borderBottom: '2px solid #DDD', textAlign: 'left' }}><th style={{ padding: '10px' }}>Статья</th><th style={{ padding: '10px' }}>👍</th><th style={{ padding: '10px' }}>👎</th></tr></thead>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #DDD', textAlign: 'left' }}>
+                    <th style={{ padding: '12px' }}>Статья</th>
+                    <th style={{ padding: '12px', width: '80px', textAlign: 'center' }}>👍</th>
+                    <th style={{ padding: '12px', width: '80px', textAlign: 'center' }}>👎</th>
+                    <th style={{ padding: '12px', width: '120px', textAlign: 'right' }}>Рейтинг</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  {articles.map(a => (
-                    <tr key={a.id} style={{ borderBottom: '1px solid #EEE' }}><td style={{ padding: '10px' }}>{a.title}</td><td style={{ padding: '10px', color: '#4CAF50' }}>{a.helpfulCount}</td><td style={{ padding: '10px', color: '#F44336' }}>{a.unhelpfulCount}</td></tr>
-                  ))}
+                  {articles.map(a => {
+                    const total = a.helpfulCount + a.unhelpfulCount;
+                    const percent = total > 0 ? Math.round((a.helpfulCount / total) * 100) : 0;
+                    return (
+                      <tr key={a.id} style={{ borderBottom: '1px solid #EEE' }}>
+                        <td style={{ padding: '12px' }}>{a.title}</td>
+                        <td style={{ padding: '12px', color: '#4CAF50', textAlign: 'center', fontWeight: 'bold' }}>{a.helpfulCount}</td>
+                        <td style={{ padding: '12px', color: '#F44336', textAlign: 'center', fontWeight: 'bold' }}>{a.unhelpfulCount}</td>
+                        <td style={{ padding: '12px', textAlign: 'right', fontWeight: 500 }}>{percent}%</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -658,15 +681,15 @@ const App: React.FC = () => {
           <div>
             <h1 style={styles.h1}>Корзина</h1>
             {trash.length === 0 ? <p>Корзина пуста</p> : trash.map((t, idx) => (
-              <div key={idx} style={{ ...styles.container, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  {t.type === 'article' ? <Icons.Article /> : <Icons.Stars />}
+              <div key={idx} style={{ ...styles.container, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <div style={{ color: '#999' }}>{t.type === 'article' ? <Icons.Article /> : <Icons.Stars />}</div>
                   <div>
-                    <div style={{ fontWeight: 'bold' }}>{t.data.title}</div>
+                    <div style={{ fontWeight: 'bold', fontSize: '15px' }}>{t.data.title}</div>
                     <div style={{ fontSize: '12px', color: '#999' }}>{t.type === 'article' ? 'Статья' : 'Обновление'}</div>
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
                   <button style={styles.button} onClick={() => restoreItem(idx)}>Восстановить</button>
                   <button style={styles.buttonDanger} onClick={() => permanentlyDeleteItem(idx)}>Удалить навсегда</button>
                 </div>
@@ -677,15 +700,39 @@ const App: React.FC = () => {
       </div>
 
       <style>{`
-        .article-body h2 { border-bottom: 1px solid #EEE; padding-bottom: 5px; margin-top: 25px; color: #7F7F7E; font-size: 18px; }
-        .article-body p { margin-bottom: 15px; }
-        .article-body ul { padding-left: 20px; margin-bottom: 15px; }
-        .article-body img { max-width: 100%; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .article-body { 
+          line-height: 1.7; 
+          font-size: 15px; 
+          color: #333; 
+          overflow-wrap: break-word; 
+          word-wrap: break-word; 
+          hyphens: auto;
+        }
+        .article-body h2 { border-bottom: 1px solid #EEE; padding-bottom: 8px; margin-top: 30px; margin-bottom: 15px; color: #333; font-size: 19px; }
+        .article-body p { margin-bottom: 18px; }
+        .article-body ul, .article-body ol { padding-left: 25px; margin-bottom: 18px; }
+        .article-body li { margin-bottom: 8px; }
+        .article-body img { 
+          max-width: 100%; 
+          height: auto; 
+          border-radius: 8px; 
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+          display: block; 
+          margin: 25px auto; 
+        }
+        .article-body strong { color: #000; }
         select { background: #FFF; cursor: pointer; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #bbb; }
       `}</style>
     </React.Fragment>
   );
 };
+
+// Helper for initial content
+const oldArticleContent = "";
 
 const root = createRoot(document.getElementById('root')!);
 root.render(<App />);
